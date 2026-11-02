@@ -3,16 +3,19 @@
 //
 
 #ifndef PRACTICA2_EEDD_CONTROLPARQUES_H
-#define PRACTICA2_EEDD_CONTROLPARQUES_H
-#include "AVL.h"
-#include "ListaDE.h"
-#include "Parque.h"
+#define PRACTICA2_EEDD_CONTROLPARQUESH
+#include <list>
+#include <map>
+#include <vector>
 
+#include "Parque.h"
+using namespace std;
 class ControlParques {
 private:
-    ListaDE<Parque> parques;
-    VDinamico<Especie*> variantes;
-    AVL<Arbol> arboles;
+    list<Parque> parques;
+    vector<Especie> variantes;
+    map<string,Arbol> arboles;
+    std::multimap<string, Arbol*> treeName;
 
 public:
     ControlParques(const string &nomFichEspecies, const string &nomFichParques, const string &nomFiceroArbol);    //Hay que cargar los ficheros aqui
@@ -20,20 +23,20 @@ public:
 
 
     Parque *buscarParque(const string &nombre);
-    VDinamico<Especie>& listadoEspecieSubNombre(const string &cadena);
-    VDinamico<Especie*>& getVariantes();
-    ListaDE<Parque>& getparques();
-    AVL<Arbol>& getArboles();
+    vector<Especie>& listadoEspecieSubNombre(const string &cadena);
+    vector<Especie*>& getVariantes();
+    list<Parque>& getparques();
+    map<string, Arbol>& getArboles();
 
 
     Arbol *buscarArbol(const string &asnum);
     void eliminarParque(const string &nombre);
-    VDinamico<Arbol*>* listaArbolesParque(const string &nombre_parque);
+    vector<Arbol*>* listaArbolesParque(const string &nombre_parque);
 
-    VDinamico<Arbol*>& buscarArbolesRango(const string &asNumMin, const string &asNumMax);
+    vector<Arbol*>& buscarArbolesRango(const string &asNumMin, const string &asNumMax);
 
     Arbol *getArbolMasAlto();
-    bool buscar_tipo_planta(const TipoPlanta &tipo_planta,  VDinamico<TipoPlanta> tipos);
+    bool buscar_tipo_planta(const TipoPlanta &tipo_planta,  vector<TipoPlanta> tipos);
     unsigned int contarEspecies(const string &nombreparque);
 
     unsigned int contarTipos();

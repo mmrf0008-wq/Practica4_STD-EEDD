@@ -4,8 +4,7 @@
 
 #include "Parque.h"
 
-#include "Iterador.h"
-
+#include <vector>
 /**
  * @brief Constructor por defecto de la clase Parque.
  * Inicializa el código de parque a 0 y el nombre a un espacio en blanco.
@@ -18,7 +17,7 @@ Parque::Parque():codigo_parque(0),nombre_parque(" ") {}
  * @param nombre Nombre del parque.
  * @param especies Vector dinámico con los punteros a los árboles a incluir en el parque.
  */
-Parque::Parque(int codigo, const string &nombre, const VDinamico<Arbol*> &especies):
+Parque::Parque(int codigo, const string &nombre, const vector<Arbol*> &especies):
             codigo_parque(codigo),nombre_parque(nombre),contenedor(especies) {
     ordenaArboles();
 }
@@ -38,8 +37,8 @@ Parque::Parque(const int &codigo, const string &nombre) {
  * Libera la memoria del contenedor de árboles.
  */
 Parque::~Parque() {
-    for ( int i = contenedor.getLogico(); i >= 0; i--) {
-        contenedor.borrar(i);
+    for ( std::vector<Arbol*>::iterator i = contenedor.begin(); i != contenedor.end(); i++) {
+        contenedor.erase(i);
     }
 }
 

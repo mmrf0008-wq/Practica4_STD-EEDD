@@ -5,6 +5,7 @@
 #ifndef PRACTICA2_EEDD_PARQUE_H
 #define PRACTICA2_EEDD_PARQUE_H
 #include <iostream>
+#include <vector>
 
 #include "Arbol.h"
 #include "Especie.h"
@@ -14,11 +15,11 @@ class Parque {
 private:
     int codigo_parque;                  //Id de parque
     string nombre_parque;
-    VDinamico<Arbol*> contenedor;     // Especies que hay en el parque
+    vector<Arbol*> contenedor;     // Especies que hay en el parque
 
 public:
     Parque();
-    Parque(int codigo,const string &nombre,const VDinamico<Arbol*> &especies);
+    Parque(int codigo,const string &nombre,const vector<Arbol*> &especies);
     Parque(const int &codigo, const string &nombre);
     ~Parque();
 
@@ -33,7 +34,7 @@ public:
 
     unsigned int contrarEspecies();
     unsigned int contarTipos();
-    VDinamico<Arbol*>& get_contenedor();
+    vector<Arbol*>& get_contenedor();
     void ordenaArboles();
 };
 
