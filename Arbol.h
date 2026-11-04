@@ -2,7 +2,8 @@
 #ifndef PRACTICA2_EEDD_ARBOL_H
 #define PRACTICA2_EEDD_ARBOL_H
 #include <iostream>
-#include <Especie.h>
+#include "Especie.h"
+class Parque;           //El include no funciona. (Forward Declaration)
 using namespace std;
 
 class Arbol {
@@ -19,6 +20,7 @@ private:
     float altura;
 
     Especie *especie_arbol;    //Cada arbol tiene 1 sola especie
+    Parque *isInto;             //Cada arbol pertenece a 1 parque
 public:
     Arbol();
     Arbol(const string &assetnum, int num_parque, int num_distrito,
@@ -48,6 +50,9 @@ public:
 
     string getNombreCientifico() const;
     string getTipoEspecie() const;
+
+    void setParque(Parque *parque);
+    Parque* getParque()const;
 };
 
 

@@ -168,6 +168,15 @@ string Arbol::getTipoEspecie() const {
     return Especie::tptostring(this->especie_arbol->get_tipo_planta());
 }
 
+void Arbol::setParque(Parque *parque) {
+    this->isInto = parque;
+}
+
+Parque * Arbol::getParque() const {
+    return isInto;
+}
+
+
 /**
  * @brief Obtiene el nombre común de la especie del árbol.
  * @return string Nombre común de la especie.
