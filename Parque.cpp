@@ -176,8 +176,12 @@ void Parque::ordenaArboles() {
     }
 }
 
-Especie * Parque::especieMasComun() const {
-    if (contenedor.size()==0) {
+/**
+ * 
+ * @return 
+ */
+Especie* Parque::especieMasComun() const {
+    if (contenedor.empty()) {
         throw out_of_range("[Parque::especieMasComun]: El vector esta vacio.");
     }
     map<string,int> contadores_especies;        //Almacena el codigo de especie de cada especie del contenedor

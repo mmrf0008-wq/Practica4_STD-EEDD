@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(Practica4_AVL_EEDD main.cpp
         Parque.h
         ControlParques.h
-        Parque.cpp)
+        Parque.cpp
+        ControlParques.cpp)

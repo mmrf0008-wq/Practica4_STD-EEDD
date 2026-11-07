@@ -14,17 +14,16 @@ class ControlParques {
 private:
     list<Parque> parques;
     vector<Especie> variantes;
-    map<string,Arbol> arboles;
+    map<string,Arbol> arboles; //la clave es assetNum
     std::multimap<string, Arbol*> treeName;
 
 public:
     ControlParques(const string &nomFichEspecies, const string &nomFichParques, const string &nomFiceroArbol);    //Hay que cargar los ficheros aqui
     ~ControlParques();
 
-
     Parque *buscarParque(const string &nombre);
     vector<Especie>& listadoEspecieSubNombre(const string &cadena);
-    vector<Especie*>& getVariantes();
+    vector<Especie>& getVariantes();
     list<Parque>& getparques();
     map<string, Arbol>& getArboles();
 

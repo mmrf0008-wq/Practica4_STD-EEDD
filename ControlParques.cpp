@@ -3,8 +3,10 @@
 //
 
 #include "ControlParques.h"
+
+#include <algorithm>
+
 #include "LectorCSV.h"
-#include "ListaDE.h"
 
 /**
  * @brief Constructor parametrizado de ControlParques. Carga los datos desde ficheros CSV.
@@ -21,7 +23,7 @@ ControlParques::ControlParques(const string &nomFichEspecies, const string &nomF
 	if(!LectorCSV::cargarEspecies(this->variantes, nomFichEspecies)) {
 		throw std::runtime_error("[ControlParques:cargaEspecies]: error al abrir fichero ");
 	}
-	this->variantes.ordenar();  //ordenamos por id de menor
+	std::sort(this->variantes.begin(), this->variantes.end(), std::greater<string>());    //ordenamos por id de menor
 
 	LectorCSV a;
 
@@ -34,36 +36,24 @@ ControlParques::ControlParques(const string &nomFichEspecies, const string &nomF
 
 }
 
+
 /**
  * @brief Destructor de la clase ControlParques.
  * Libera la memoria consumida por los objetos Especie guardados en el vector de variantes.
  */
 ControlParques::~ControlParques() {
-	for(int i =0; i < this->variantes.size(); i++) { //eliminamos las especies
-		delete this->variantes[i];
+	for(vector<Especie>::iterator i = this->variantes.begin(); i != this->variantes.end(); i++) { //eliminamos las especies
+		this->variantes.erase(i);
 	}
-	//la eliminación de parque se gestiona dentro de la clase listaDE
 }
 
-/**
- * @brief Busca un parque por su nombre exacto.
- * @param nombre Nombre del parque a buscar.
- * @return Parque& Referencia al objeto Parque encontrado.
- */
-Parque *ControlParques::buscarParque(const string &nombre) {
-
-	Iterador<Parque> i= this->parques.iterador();
-	Parque *parque = nullptr;
-	bool parar= false;
-	while(!i.fin() && !parar) {
-		if(i.dato().getNombreParque() == nombre) {
-			parque = &i.dato();
-			parar =true;
+Parque * ControlParques::buscarParque(const string &nombre) {
+	for(list<Parque>::iterator i = this->parques.begin(); i != this->parques.end(); i++) {
+		if(i->getNombreParque() == nombre) {
+			return &i.operator*();
 		}
-		i.siguiente();
 	}
-
-	return parque;
+	return nullptr;
 }
 
 /**
@@ -86,7 +76,7 @@ vector<Especie> & ControlParques::listadoEspecieSubNombre(const string &cadena) 
  * @brief Obtiene el vector dinámico con los punteros a todas las variantes de especies.
  * @return VDinamico<Especie*>& Referencia al vector dinámico de variantes.
  */
-vector<Especie*> & ControlParques::getVariantes() {
+vector<Especie> & ControlParques::getVariantes() {
 	return this->variantes;
 }
 
@@ -102,7 +92,7 @@ list<Parque> & ControlParques::getparques() {
  * @brief Obtiene el árbol AVL que contiene todos los árboles del sistema.
  * @return AVL<Arbol>& Referencia al árbol AVL de punteros a Arbol.
  */
-AVL<Arbol> & ControlParques::getArboles() {
+map<string,Arbol> & ControlParques::getArboles() {
 	return this->arboles;
 }
 
@@ -113,9 +103,7 @@ AVL<Arbol> & ControlParques::getArboles() {
  */
 Arbol *ControlParques::buscarArbol(const string &asnum) {
 
-	Arbol *a = new Arbol();
-	a->setAsNum(asnum);
-	return this->arboles.buscaRecursiva(*a);
+	return t
 }
 
 /**
@@ -183,6 +171,7 @@ vector<Arbol *> & ControlParques::buscarArbolesRango(const string &asNumMin, con
 
 	return *nuevo;
 }
+
 
 /**
  * @brief Devuelve el árbol de mayor altura de entre todos los parques. Si hay empate, devuelve el primero encontrado.
