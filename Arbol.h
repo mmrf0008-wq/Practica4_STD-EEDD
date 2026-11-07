@@ -39,6 +39,8 @@ public:
     bool operator==(const Arbol &arbol);
 
     void setEspecie(Especie *e);
+    Especie* getEspecie() const;
+
     string getCodigoEspecie() const;
     string getNombreComun() const;
     void setAsNum(const string &asNum);

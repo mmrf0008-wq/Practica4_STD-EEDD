@@ -4,6 +4,7 @@
 
 #include "Parque.h"
 
+#include <map>
 #include <vector>
 /**
  * @brief Constructor por defecto de la clase Parque.
@@ -79,7 +80,7 @@ void Parque::setNombreParque(const string &nombre) {
  * @param arbol Puntero al árbol que se va a insertar.
  */
 void Parque::insertarArbol(Arbol *arbol) {
-    if(arbol) this->contenedor.insertar(arbol);
+    if(arbol) this->contenedor.push_back(arbol);
 }
 
 /**
@@ -88,7 +89,7 @@ void Parque::insertarArbol(Arbol *arbol) {
  * @return true Si existe al menos un árbol con ese nombre común, false en caso contrario.
  */
 bool Parque::existeNComun(const string &nombre) {
-    for(int i =0; i < this->contenedor.getLogico(); i++) {
+    for(int i =0; i < this->contenedor.size(); i++) {
         if(this->contenedor[i]->getNombreComun() == nombre) {
             return true;
         }
@@ -104,7 +105,7 @@ Arbol* Parque::arbolMasAlto() {
 
     Arbol *a = nullptr;
 
-    for(int i =0; i < this->contenedor.getLogico(); i++) {
+    for(int i =0; i < this->contenedor.size(); i++) {
         if(!a || this->contenedor[i]->get_altura() > a->get_altura()) {
             a= this->contenedor[i];
         }
@@ -116,14 +117,14 @@ Arbol* Parque::arbolMasAlto() {
  * @brief Devuelve el número de especies distintas presentes en el parque.
  * @return unsigned int Cantidad de especies únicas almacenadas.
  */
-unsigned int Parque::contrarEspecies() {
+unsigned int Parque::contarEspecies() {
 
     bool repetida= false;
     int cont=0;
 
-    for(int i =0; i < this->contenedor.getLogico(); i++) {
+    for(int i =0; i < this->contenedor.size(); i++) {
         repetida = false;
-        for(int j = i+1; j < this->contenedor.getLogico() && !repetida; j++) {
+        for(int j = i+1; j < this->contenedor.size() && !repetida; j++) {
             if(this->contenedor[i]->getCodigoEspecie() == this->contenedor[j]->getCodigoEspecie()) {
                 repetida = true;
             }
@@ -141,9 +142,9 @@ unsigned int Parque::contarTipos() {
    bool repetida= false;
     int cont=0;
 
-    for(int i =0; i < this->contenedor.getLogico(); i++) {
+    for(int i =0; i < this->contenedor.size(); i++) {
        repetida = false;
-        for(int j = i+1; j < this->contenedor.getLogico() && !repetida; j++) {
+        for(int j = i+1; j < this->contenedor.size() && !repetida; j++) {
             if(this->contenedor[i]->getTipoEspecie() == this->contenedor[j]->getTipoEspecie()) {
                repetida = true;
             }
@@ -158,14 +159,14 @@ unsigned int Parque::contarTipos() {
  * @brief Obtiene la referencia al contenedor dinámico con los árboles del parque.
  * @return VDinamico<Arbol>& Referencia al vector dinámico de punteros a objetos Arbol.
  */
-VDinamico<Arbol*>& Parque::get_contenedor() {return this->contenedor; }
+vector<Arbol*>& Parque::get_contenedor() {return this->contenedor; }
 
 /**
  * @brief Ordena los árboles del parque de menor a mayor según su número de asset.
  */
 void Parque::ordenaArboles() {
-    for (int i = 0; i < this->contenedor.getLogico() - 1; i++) {
-        for (int j = 0; j <  this->contenedor.getLogico() - i - 1; j++) {
+    for (int i = 0; i < this->contenedor.size() - 1; i++) {
+        for (int j = 0; j <  this->contenedor.size() - i - 1; j++) {
             if (this->contenedor[j]->getAssetNum() > this->contenedor[j + 1]->getAssetNum()) {
                 Arbol *aux = this->contenedor[j];
                 this->contenedor[j] = this->contenedor[j + 1];
@@ -173,5 +174,26 @@ void Parque::ordenaArboles() {
             }
         }
     }
+}
+
+Especie * Parque::especieMasComun() const {
+    if (contenedor.size()==0) {
+        throw out_of_range("[Parque::especieMasComun]: El vector esta vacio.");
+    }
+    map<string,int> contadores_especies;        //Almacena el codigo de especie de cada especie del contenedor
+                                                // y un contador con el numero de repeticiones de la cada una
+    int maximo=0;                               //Contador de la especie mas repetida
+    Especie* especie_mas_comun = nullptr;       //Especie mas repetida
+
+    for (int i = 0; i < contenedor.size(); i++) {
+        string codigo_de_especie = contenedor[i]->getCodigoEspecie();
+        contadores_especies[codigo_de_especie]++;                   //Almacena el codigo de esta especie y incrementa su contador
+
+        if (contadores_especies[codigo_de_especie] > maximo) {
+            maximo = contadores_especies[codigo_de_especie];
+            especie_mas_comun = contenedor[i]->getEspecie();
+        }
+    }
+    return especie_mas_comun;
 }
 

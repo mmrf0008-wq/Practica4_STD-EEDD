@@ -168,6 +168,10 @@ string Arbol::getTipoEspecie() const {
     return Especie::tptostring(this->especie_arbol->get_tipo_planta());
 }
 
+Especie* Arbol::getEspecie() const {
+    return especie_arbol;
+}
+
 void Arbol::setParque(Parque *parque) {
     this->isInto = parque;
 }

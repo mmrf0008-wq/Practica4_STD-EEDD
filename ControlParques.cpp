@@ -39,7 +39,7 @@ ControlParques::ControlParques(const string &nomFichEspecies, const string &nomF
  * Libera la memoria consumida por los objetos Especie guardados en el vector de variantes.
  */
 ControlParques::~ControlParques() {
-	for(int i =0; i < this->variantes.getLogico(); i++) { //eliminamos las especies
+	for(int i =0; i < this->variantes.size(); i++) { //eliminamos las especies
 		delete this->variantes[i];
 	}
 	//la eliminación de parque se gestiona dentro de la clase listaDE
@@ -71,12 +71,12 @@ Parque *ControlParques::buscarParque(const string &nombre) {
  * @param cadena Subcadena a buscar dentro del nombre científico.
  * @return VDinamico<Especie>& Referencia a un nuevo vector dinámico con las especies coincidentes.
  */
-VDinamico<Especie> & ControlParques::listadoEspecieSubNombre(const string &cadena) {
+vector<Especie> & ControlParques::listadoEspecieSubNombre(const string &cadena) {
 
-	VDinamico<Especie> *listad = new VDinamico<Especie>();
-	for(int i =0; i < this->variantes.getLogico(); i++) {
-		if(this->variantes[i]->get_nombre_cientifico().find(cadena)) {
-			listad->insertar(*this->variantes[i]);
+	vector<Especie> *listad = new vector<Especie>();
+	for(int i =0; i < this->variantes.size(); i++) {
+		if(this->variantes[i].get_nombre_cientifico().find(cadena)) {
+			listad->push_back(this->variantes[i]);
 		}
 	}
 	return *listad;
@@ -86,7 +86,7 @@ VDinamico<Especie> & ControlParques::listadoEspecieSubNombre(const string &caden
  * @brief Obtiene el vector dinámico con los punteros a todas las variantes de especies.
  * @return VDinamico<Especie*>& Referencia al vector dinámico de variantes.
  */
-VDinamico<Especie*> & ControlParques::getVariantes() {
+vector<Especie*> & ControlParques::getVariantes() {
 	return this->variantes;
 }
 
@@ -94,7 +94,7 @@ VDinamico<Especie*> & ControlParques::getVariantes() {
  * @brief Obtiene la lista doblemente enlazada de parques gestionados.
  * @return ListaDE<Parque>& Referencia a la lista de parques.
  */
-ListaDE<Parque> & ControlParques::getparques() {
+list<Parque> & ControlParques::getparques() {
 	return this->parques;
 }
 
@@ -128,7 +128,7 @@ void ControlParques::eliminarParque(const string &nombre) {
 
 	while(!i.fin()) {
 		if(i.dato().getNombreParque() == nombre) {
-			this->parques.borra(i);
+			this->parques.erase(i);
 		}
 		i.siguiente();
 	}
@@ -139,7 +139,7 @@ void ControlParques::eliminarParque(const string &nombre) {
  * @param nombre_parque Nombre del parque del cual se quiere obtener la lista de árboles.
  * @return VDinamico<Arbol>* Puntero al vector dinámico con los árboles del parque, o nullptr si el parque no existe.
  */
-VDinamico<Arbol*> * ControlParques::listaArbolesParque(const string &nombre_parque) {
+vector<Arbol*> * ControlParques::listaArbolesParque(const string &nombre_parque) {
 
 	Iterador<Parque> i = this->parques.iterador();
 
@@ -166,8 +166,8 @@ VDinamico<Arbol*> * ControlParques::listaArbolesParque(const string &nombre_parq
  * @throw std::invalid_argument Si la cota inferior es mayor que la cota superior.
  *
  */
-VDinamico<Arbol *> & ControlParques::buscarArbolesRango(const string &asNumMin, const string &asNumMax) {
-	VDinamico<Arbol*> *nuevo = new VDinamico<Arbol *>;
+vector<Arbol *> & ControlParques::buscarArbolesRango(const string &asNumMin, const string &asNumMax) {
+	vector<Arbol*> *nuevo = new vector<Arbol *>;
 
 	if(asNumMin > asNumMax) {
 		throw invalid_argument("[BUSCAR_ARBOLES_RANGO] se a introducido una cota inferior con valor mayor que la cota superior");
@@ -212,8 +212,8 @@ Arbol *ControlParques::getArbolMasAlto() {
  * @param tipos Vector dinámico donde realizar la búsqueda.
  * @return true si lo encuentra, false en caso contrario.
  */
-bool ControlParques::buscar_tipo_planta(const TipoPlanta &tipo_planta,  VDinamico<TipoPlanta> tipos) {
-	for(int i =0; i < tipos.getLogico(); i++) {
+bool ControlParques::buscar_tipo_planta(const TipoPlanta &tipo_planta,  vector<TipoPlanta> tipos) {
+	for(int i =0; i < tipos.size(); i++) {
 		if(tipos[i] == tipo_planta) {
 			return true;
 		}
@@ -228,7 +228,7 @@ bool ControlParques::buscar_tipo_planta(const TipoPlanta &tipo_planta,  VDinamic
  */
 unsigned int ControlParques::contarEspecies(const string &nombreparque) {
 	Parque *p = buscarParque(nombreparque);
-	if(p) return p->contrarEspecies();
+	if(p) return p->contarEspecies();
 	return 0;
 }
 
@@ -239,10 +239,10 @@ unsigned int ControlParques::contarEspecies(const string &nombreparque) {
 unsigned int ControlParques::contarTipos() {
 
 	Iterador<Parque> i = this->parques.iterador();
-	VDinamico<TipoPlanta> encontradas;
+	vector<TipoPlanta> encontradas;
 	TipoPlanta aux;
 	while (!i.fin()) {
-		for(int j=0; j < i.dato().get_contenedor().getLogico(); j++ ) {
+		for(int j=0; j < i.dato().get_contenedor().size(); j++ ) {
 			aux = Especie::stringtotp(  i.dato().get_contenedor()[j]->getTipoEspecie());
 			if( !buscar_tipo_planta(aux, encontradas) && aux != TipoPlanta::NONE) {
 				encontradas.insertar(aux);
@@ -250,5 +250,5 @@ unsigned int ControlParques::contarTipos() {
 		}
 		i.siguiente();
 	}
-	return encontradas.getLogico();
+	return encontradas.size();
 }

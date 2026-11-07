@@ -31,10 +31,12 @@ public:
     bool existeNComun(const string &nombre);
     Arbol* arbolMasAlto();
 
-    unsigned int contrarEspecies();
+    unsigned int contarEspecies();
     unsigned int contarTipos();
     vector<Arbol*>& get_contenedor();
     void ordenaArboles();
+
+    Especie* especieMasComun() const;
 };
 
 
