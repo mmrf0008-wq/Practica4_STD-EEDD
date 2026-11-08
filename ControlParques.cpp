@@ -241,3 +241,4 @@ unsigned int ControlParques::contarTipos() {
 	}
 	return encontradas.size();
 }
+

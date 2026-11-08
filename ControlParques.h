@@ -31,7 +31,6 @@ public:
     Arbol *buscarArbol(const string &asnum);
     void eliminarParque(const string &nombre);
     vector<Arbol*>* listaArbolesParque(const string &nombre_parque);
-
     vector<Arbol*>& buscarArbolesRango(const string &asNumMin, const string &asNumMax);
 
     Arbol *getArbolMasAlto();
