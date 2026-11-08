@@ -50,9 +50,9 @@ int main() {
         cout << "\nEJERCICIO 3: BUSCAR PARQUES CON ABETO\n";
         auto parques = control.listarParquesArbol("Abeto");
         for (Parque *pq: parques) {
-            cout << "\tCodigo: " << pq->get_cod_parque() << endl;
-            cout << "\tNombre: " << pq->get_nbre_parque() << endl;
-            cout << "\tArboles: " << pq->get_contains().size() << endl;
+            cout << "\tCodigo: " << pq->getCodigoParque() << endl;
+            cout << "\tNombre: " << pq->getNombreParque() << endl;
+            cout << "\tArboles: " << pq->get_contenedor().size() << endl;
             cout << endl;
         }
 
@@ -61,8 +61,8 @@ int main() {
         Arbol *arbol = control.buscarArbolNcomun(unicoArbol);
         if (arbol != nullptr) {
             cout << "\tBuscar Pino resinero" << endl;
-            cout << "\t" << "identificador: " << arbol->getAssetnum() << endl;
-            cout << "\t" << "codigo de parque: " << arbol->getParque()->get_cod_parque() << endl;
+            cout << "\t" << "identificador: " << arbol->getAssetNum() << endl;
+            cout << "\t" << "codigo de parque: " << arbol->getParque()->getCodigoParque() << endl;
             cout << "\t" << "nombre común: " << arbol->getEspecie()->get_nombre_comun() << endl;
             cout << "\t" << "nombre científico: " << arbol->getEspecie()->get_nombre_cientifico() << endl;
             cout << "\t" << "tipo planta: " << arbol->getEspecie()->get_tipo_planta() << endl;
@@ -85,9 +85,9 @@ int main() {
         vector<Arbol *> arbolesNombreDistrito = control.buscarArbolesPorEspecieYDistrito("Pino", 9);
         cout<<"Arboles encontrados: "<<arbolesNombreDistrito.size()<<endl;
         for (auto arbol: arbolesNombreDistrito) {
-            cout << "\t" << "assetnum: " << arbol->getAssetnum() << endl;
+            cout << "\t" << "assetnum: " << arbol->getAssetNum() << endl;
             cout << "\t" << "nombre barrio: " << arbol->getnbrebarrio() << endl;
-            cout << "\t" << "parque: " << arbol->getParque()->get_nbre_parque() << endl;
+            cout << "\t" << "parque: " << arbol->getParque()->getNombreParque() << endl;
             cout << endl;
         }
     } catch (const std::exception &error) {
