@@ -185,7 +185,7 @@ Especie* Parque::especieMasComun() const {
         throw out_of_range("[Parque::especieMasComun]: El vector esta vacio.");
     }
     map<string,int> contadores_especies;        //Almacena el codigo de especie de cada especie del contenedor
-                                                // y un contador con el numero de repeticiones de la cada una
+                                                // y un contador con el numero de repeticiones de cada una
     int maximo=0;                               //Contador de la especie mas repetida
     Especie* especie_mas_comun = nullptr;       //Especie mas repetida
 
