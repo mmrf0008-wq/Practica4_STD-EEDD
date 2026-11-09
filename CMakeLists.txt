@@ -8,4 +8,5 @@ add_executable(Practica4_AVL_EEDD main.cpp
         ControlParques.h
         Parque.cpp
         ControlParques.cpp
-        Arbol.cpp)
+        Arbol.cpp
+        LectorCSV.cpp)

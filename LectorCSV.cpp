@@ -1,11 +1,12 @@
 #include "LectorCSV.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <list>
 #include <sstream>
 
 #include "Especie.h"
-#include "VDinamico.h"
 
 std::size_t LectorCSV::numeroEspecies_ = 0;
 std::size_t LectorCSV::filasDescartadas_ = 0;
@@ -20,7 +21,7 @@ std::size_t LectorCSV::filasDescartadas_ = 0;
  * @param rutaFichero Ruta del fichero CSV a leer.
  * @return true si el fichero se ha podido abrir, false en caso contrario.
  */
-bool LectorCSV::cargarEspecies(VDinamico<Especie*> &vector, const std::string& rutaFichero) {
+bool LectorCSV::cargarEspecies(vector<Especie> &vector, const std::string& rutaFichero) {
     filasDescartadas_ = 0;
 
     std::ifstream fichero(rutaFichero);
@@ -64,10 +65,11 @@ bool LectorCSV::cargarEspecies(VDinamico<Especie*> &vector, const std::string& r
 
         TipoPlanta p = Especie::stringtotp(tipoPlanta);
 
-        vector.insertar(new Especie(codigo, nombreComun, nombreCientifico,p));
+        Especie e(codigo, nombreComun, nombreCientifico,p);
+        vector.push_back(e);
 
     }
-    numeroEspecies_= vector.getLogico();
+    numeroEspecies_= vector.size();
     return true;
 }
 
@@ -223,17 +225,17 @@ float LectorCSV::leerMedida(string campo) {
     return campo.empty() ? -1.0f : std::stof(campo);
 }
 
-Especie *LectorCSV::buscaEspecie(const string &cod, VDinamico<Especie*> especies) {
+Especie *LectorCSV::buscaEspecie(const string &cod, vector<Especie> especies) {
     Especie *e = nullptr;
-    for(int i=0; i < especies.getLogico(); i++) {
-        e= especies[i];
+    for(int i=0; i < especies.size(); i++) {
+        e= &especies[i];
         if(e->get_codigo_especie() == cod) {
             return e;
         }
     }
     return e;
 }
-Arbol* LectorCSV::leerArbol_csv(const string &linea,  VDinamico<Especie*> especies) {
+Arbol& LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> especies) {
     std::stringstream registro(linea);
     std::string campos[12];
 
@@ -263,10 +265,10 @@ Arbol* LectorCSV::leerArbol_csv(const string &linea,  VDinamico<Especie*> especi
         leerMedida(campos[10]),
         leerMedida(campos[11]),
         new Especie(*buscaEspecie(campos[8], especies)));
-    return  a;
+    return  *a;
 }
 
-bool  LectorCSV::cargarParques(ListaDE<Parque > &parques, const std::string &rutaFichero) {
+bool  LectorCSV::cargarParques(list<Parque> &parques, const std::string &rutaFichero) {
     filasDescartadas_ = 0;
 
     std::ifstream fichero(rutaFichero);
@@ -295,14 +297,14 @@ bool  LectorCSV::cargarParques(ListaDE<Parque > &parques, const std::string &rut
 
         codigo_parque = stoi(extraerCampo(linea, 0));
         nombre_parque = extraerCampo(linea, 1);
-        parques.insertaFin( Parque(codigo_parque,nombre_parque));
+        parques.push_back( Parque(codigo_parque,nombre_parque));
 
     }
-    numeroEspecies_= parques.tam();
+    numeroEspecies_= parques.size();
     return true;
 }
 
-bool LectorCSV::cargosArbol(AVL<Arbol> &arboles, const std::string &rutaFichero, ListaDE<Parque> &parques, VDinamico<Especie *> especies) {
+bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> especies) {
 
     std::ifstream fichero(rutaFichero);
 
@@ -320,19 +322,15 @@ bool LectorCSV::cargosArbol(AVL<Arbol> &arboles, const std::string &rutaFichero,
         if (linea.empty())
             continue;
 
-        Arbol *arbol = leerArbol_csv(linea, especies);
+        Arbol arbol = leerArbol_csv(linea, especies);
 
-        if (!arboles.inserta(*arbol))
-            throw std::runtime_error(
-                "Identificador duplicado: " + arbol->getAssetNum());
+        arboles.insert({arbol.getAssetNum(), arbol});
 
-        Iterador<Parque> i = parques.iterador();
-        while(!i.fin()) { //ligamos el arbol con un parque
-            if(i.dato().getCodigoParque() == arbol->get_num_parque()) {
-             //   cout << " el arbol con codigo " << arbol.getAssetNum() << " esta en el parque " << i.dato().getCodigoParque() << endl;
-                i.dato().insertarArbol(arbol);
+
+        for(list<Parque>::iterator i = parques.begin(); i != parques.end(); i++) { //ligamos el arbol con un parque
+            if(i->getCodigoParque() == arbol.get_num_parque()) {
+                i->insertarArbol(&arbol);
             }
-            i.siguiente();
         }
     }
 

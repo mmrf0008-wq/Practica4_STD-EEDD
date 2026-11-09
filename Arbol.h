@@ -56,9 +56,13 @@ public:
     void setParque(Parque *parque);
     Parque* getParque()const;
 
-    [[nodiscard]] int get_num_barrio() const;
+    int get_num_barrio() const;
 
     void set_num_barrio(int num_barrio);
+
+    string get_nombre_barrio() const;
+
+    void set_nombre_barrio(const string &nombre_barrio);
 };
 
 
