@@ -180,6 +180,14 @@ Parque * Arbol::getParque() const {
     return isInto;
 }
 
+int Arbol::get_num_barrio() const {
+	return num_barrio;
+}
+
+void Arbol::set_num_barrio(int num_barrio) {
+	this->num_barrio = num_barrio;
+}
+
 
 /**
  * @brief Obtiene el nombre común de la especie del árbol.

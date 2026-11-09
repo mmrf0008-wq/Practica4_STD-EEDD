@@ -7,4 +7,5 @@ add_executable(Practica4_AVL_EEDD main.cpp
         Parque.h
         ControlParques.h
         Parque.cpp
-        ControlParques.cpp)
+        ControlParques.cpp
+        Arbol.cpp)

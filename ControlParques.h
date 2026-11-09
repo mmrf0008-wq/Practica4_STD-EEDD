@@ -39,6 +39,13 @@ public:
 
     unsigned int contarTipos();
 
+    list<Parque> *listarParqueArbol(string nombre_comun);
+    vector<Arbol*> *buscarArbolNombreComun(string nombre_comun);
+    vector<Arbol*>* buscarArbolNombreComunComienzo(string ncomun);
+    int contarArbolesBarrio(int num_barrio);
+
+
+
 };
 
 

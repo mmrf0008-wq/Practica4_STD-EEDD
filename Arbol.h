@@ -55,6 +55,10 @@ public:
 
     void setParque(Parque *parque);
     Parque* getParque()const;
+
+    [[nodiscard]] int get_num_barrio() const;
+
+    void set_num_barrio(int num_barrio);
 };
 
 
