@@ -75,18 +75,19 @@ int main() {
             printParque(&i.operator*());
         }
 
-       /* cout << "\nEJERCICIO 4: BUSCAR BUSCAR PINO RESINERO Y PINO\n";
+        cout << "\nEJERCICIO 4: BUSCAR BUSCAR PINO RESINERO Y PINO\n";
         string unicoArbol = "Pino resinero";
-        Arbol *arbol = control.buscarArbolNombreComun(unicoArbol);
-        if (arbol != nullptr) {
-            cout << "\tBuscar Pino resinero" << endl;
-            printArbol(arbol);
-        } else {
-            cout << "\t" << "No se ha encontrado el árbol " << unicoArbol << endl;
+        vector<Arbol*> *arbol = control.buscarArbolNombreComun(unicoArbol);
+
+        if(arbol == nullptr) throw invalid_argument("no se ha encontrado ningun arbol");
+
+        for(int i=0; i < arbol->size(); i++) {
+            printArbol((*(arbol))[i]);
         }
 
-        vector<Arbol *> arbolesPino = *control.buscarArbolNombreComunComienzo("Pino");
-        cout<<"\tPinos encontrado: "<<arbolesPino.size()<<endl;
+        vector<Arbol *> *arbolesPino = control.buscarArbolNombreComunComienzo("Pino");
+        if(arbolesPino == nullptr) throw invalid_argument("arboles con comienzo pino no encontrados") ;
+        cout<<"\tPinos encontrado: "<<arbolesPino->size()<<endl;
 
         cout << "\nEJERCICIO 5: ÁRBOLES EN BARRIOS 43 Y 91\n";
         int id_barrios[] = {43, 91};
@@ -95,7 +96,7 @@ int main() {
             cout << "\t" << "Total árboles barrio " << barrio << ": " << total << endl;
         }
 
-        cout << "\nEJERCICIO DE PAREJAS/OPCIONAL: BUSCAR ÁRBOLES POR NOMBRE Y BARRIO\n";
+       /* cout << "\nEJERCICIO DE PAREJAS/OPCIONAL: BUSCAR ÁRBOLES POR NOMBRE Y BARRIO\n";
         vector<Arbol *> arbolesNombreDistrito = control.buscarArbolesPorEspecieYDistrito("Pino", 9);
         cout<<"Arboles encontrados: "<<arbolesNombreDistrito.size()<<endl;
         for (auto arbol: arbolesNombreDistrito) {
@@ -108,6 +109,4 @@ int main() {
         std::cerr << "\nError: " << error.what() << '\n';
         return 1;
     }
-
-    return 0;
 };

@@ -30,9 +30,7 @@ ControlParques::ControlParques(const string &nomFichEspecies, const string &nomF
 
 }
 ControlParques::~ControlParques() {
-	for(vector<Especie>::iterator i = this->variantes.begin(); i != this->variantes.end(); i++) { //eliminamos las especies
-		this->variantes.erase(i);
-	}
+	this->variantes.clear();
 }
 
 Parque * ControlParques::buscarParque(const string &nombre) {
@@ -132,8 +130,6 @@ vector<Arbol *> & ControlParques::buscarArbolesRango(const string &asNumMin, con
 	return *nuevo;
 }
 
-
-
 Arbol *ControlParques::getArbolMasAlto() {
 
 	Arbol *encontrado = nullptr;
@@ -148,8 +144,6 @@ Arbol *ControlParques::getArbolMasAlto() {
 	}
 	return encontrado; 
 }
-
-
 bool ControlParques::buscar_tipo_planta(const TipoPlanta &tipo_planta,  vector<TipoPlanta> tipos) {
 	for(int i =0; i < tipos.size(); i++) {
 		if(tipos[i] == tipo_planta) {
@@ -165,10 +159,7 @@ unsigned int ControlParques::contarEspecies(const string &nombreparque) {
 	if(p) return p->contarEspecies();
 	return 0;
 }
-
-
 unsigned int ControlParques::contarTipos() {
-
 
 	vector<TipoPlanta> encontradas;
 	TipoPlanta aux;
