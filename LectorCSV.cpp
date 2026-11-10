@@ -225,7 +225,7 @@ float LectorCSV::leerMedida(string campo) {
     return campo.empty() ? -1.0f : std::stof(campo);
 }
 
-Especie *LectorCSV::buscaEspecie(const string &cod, vector<Especie> especies) {
+Especie *LectorCSV::buscaEspecie(const string &cod, vector<Especie> &especies) {
     Especie *e = nullptr;
     for(int i=0; i < especies.size(); i++) {
         e= &especies[i];
@@ -235,7 +235,7 @@ Especie *LectorCSV::buscaEspecie(const string &cod, vector<Especie> especies) {
     }
     return e;
 }
-Arbol& LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> especies) {
+Arbol LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> &especies) {
     std::stringstream registro(linea);
     std::string campos[12];
 
@@ -253,7 +253,7 @@ Arbol& LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> especies) 
 
 
 
-    Arbol *a  = new  Arbol(
+    Arbol a(
         campos[0],
         std::stoi(campos[1]),
         std::stoi(campos[2]),
@@ -265,7 +265,7 @@ Arbol& LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> especies) 
         leerMedida(campos[10]),
         leerMedida(campos[11]),
         new Especie(*buscaEspecie(campos[8], especies)));
-    return  *a;
+    return  a;
 }
 
 bool  LectorCSV::cargarParques(list<Parque> &parques, const std::string &rutaFichero) {
@@ -304,7 +304,7 @@ bool  LectorCSV::cargarParques(list<Parque> &parques, const std::string &rutaFic
     return true;
 }
 
-bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> especies) {
+bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies) {
 
     std::ifstream fichero(rutaFichero);
 
@@ -329,9 +329,11 @@ bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaF
 
         for(list<Parque>::iterator i = parques.begin(); i != parques.end(); i++) { //ligamos el arbol con un parque
             if(i->getCodigoParque() == arbol.get_num_parque()) {
-                i->insertarArbol(&arbol);
+                i->insertarArbol(new Arbol(arbol));
             }
         }
+
+
     }
 
     return true;

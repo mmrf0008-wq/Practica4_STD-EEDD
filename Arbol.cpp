@@ -7,7 +7,7 @@
  */
 Arbol::Arbol(): assetnum(""),num_parque(0),num_distrito(0),
                 nombre_distrito(""),num_barrio(0),nombre_barrio(""),
-                x(0),y(0),perimetro(0),altura(0),especie_arbol(nullptr)
+                x(0),y(0),perimetro(0),altura(0),especie_arbol(nullptr),isInto(nullptr)
 {
 }
 
@@ -38,8 +38,10 @@ Arbol::Arbol(const string &assetnum, int num_parque, int num_distrito, const str
 Arbol::Arbol(const Arbol &orig): assetnum(orig.assetnum),num_parque(orig.num_parque),num_distrito(orig.num_distrito),
                                 nombre_distrito(orig.nombre_distrito),num_barrio(orig.num_barrio),
                                 nombre_barrio(orig.nombre_barrio),x(orig.x),y(orig.y),perimetro(orig.perimetro),
-                                altura(orig.altura),especie_arbol(orig.especie_arbol)
+                                altura(orig.altura)
 {
+	this->especie_arbol = new Especie(*orig.especie_arbol);
+	this->isInto = orig.isInto;
 }
 
 /**
@@ -95,9 +97,9 @@ Arbol & Arbol::operator=(const Arbol &arbol) {
         delete especie_arbol;
         especie_arbol = nullptr;
 
-    	  if(arbol.especie_arbol) {
+	      if(arbol.especie_arbol) {
     		   this->especie_arbol = new Especie(*arbol.especie_arbol);
-    	  }
+	      }
 
         this->assetnum = arbol.assetnum;
         this->num_parque = arbol.num_parque;

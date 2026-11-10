@@ -43,6 +43,17 @@ Parque::~Parque() {
     }
 }
 
+Parque::Parque(const Parque &orig) {
+
+    this->nombre_parque = orig.nombre_parque;
+    this->codigo_parque = orig.codigo_parque;
+
+    for(int i =0; i < orig.contenedor.size(); i++ ) {
+        this->contenedor.push_back(orig.contenedor[i]);
+    }
+
+}
+
 /**
  * @brief Obtiene el código del parque.
  * @return int Código identificador del parque.

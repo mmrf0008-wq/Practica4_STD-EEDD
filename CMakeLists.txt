@@ -9,4 +9,5 @@ add_executable(Practica4_AVL_EEDD main.cpp
         Parque.cpp
         ControlParques.cpp
         Arbol.cpp
-        LectorCSV.cpp)
+        LectorCSV.cpp
+        Especie.cpp)

@@ -14,21 +14,21 @@ ControlParques::ControlParques(const string &nomFichEspecies, const string &nomF
 	if(!LectorCSV::cargarEspecies(this->variantes, nomFichEspecies)) {
 		throw std::runtime_error("[ControlParques:cargaEspecies]: error al abrir fichero ");
 	}
-	std::sort(this->variantes.begin(), this->variantes.end(), std::greater<string>());    //ordenamos por id de menor
+	cout << "cargadas las especies " << endl;
+	  ordenarEspecies();   //ordenamos por id de menor
 
 	LectorCSV a;
 
 	if(!LectorCSV::cargarParques(this->parques, nomFichParques)) {
 		throw std::runtime_error("[ControlParques:cargaParques]: error al abrir fichero ");
 	}
+	cout << "cargados los parques" << endl;
 	if(!a.cargosArbol(this->arboles, nomFicheroArboles, this->parques, this->variantes)) { // lectura de arboles y ligue entre arbol y parque
 		throw std::runtime_error("[ControlParques:cargaArboles]: error al abrir fichero ");
 	}
+	cout << "Cargados los arboles" << endl;
 
 }
-
-
-
 ControlParques::~ControlParques() {
 	for(vector<Especie>::iterator i = this->variantes.begin(); i != this->variantes.end(); i++) { //eliminamos las especies
 		this->variantes.erase(i);
@@ -231,7 +231,7 @@ vector<Arbol *>* ControlParques::buscarArbolNombreComun(string nombre_comun) {
  * @param nombre_comun 
  * @return 
  */
-vector<Arbol *> *ControlParques::buscarArbolNombreComunComienzo(string ncomun) {
+vector<Arbol*> *ControlParques::buscarArbolNombreComunComienzo(string ncomun) {
 
 	vector<Arbol*> *encontrados = new vector<Arbol *>();
 
@@ -261,5 +261,20 @@ int ControlParques::contarArbolesBarrio(int num_barrio) {
 		}
 	}
 	return contador;
+}
+
+void ControlParques::ordenarEspecies() {
+
+	string valor;
+	Especie *aux;
+	for(int i =1; i < this->variantes.size(); i++) {
+		aux = &this->variantes[i];
+		int j= i-1;
+		while(j >=0 && this->variantes[j].get_codigo_especie() > aux->get_codigo_especie()) {
+			this->variantes[j+1] = this->variantes[j];
+			j= j-1;
+		}
+		this->variantes[j+1] = *aux;
+	}
 }
 

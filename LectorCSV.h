@@ -23,7 +23,7 @@ public:
     bool static  cargarEspecies(vector<Especie> &vector, const std::string& rutaFichero);
     bool static cargarParques(list<Parque> &parques, const std::string &rutaFichero);
 
-    bool  cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> especies);
+    bool  cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies);
 
     std::size_t numeroEspecies() const;
     std::size_t filasDescartadas() const;
@@ -37,8 +37,8 @@ private:
     static void eliminarBOM(std::string& linea);
     static void mostrarEspecie(const Especie& especie);
      float leerMedida(string campo);
-     Arbol& leerArbol_csv(const string &linea,  vector<Especie> especies) ;
-     Especie* buscaEspecie(const string &cod, vector<Especie> especies);
+     Arbol leerArbol_csv(const string &linea,  vector<Especie> &especies) ;
+     Especie* buscaEspecie(const string &cod, vector<Especie> &especies);
 
 
 };

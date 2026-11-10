@@ -21,6 +21,7 @@ public:
     Parque(int codigo,const string &nombre,const vector<Arbol*> &especies);
     Parque(const int &codigo, const string &nombre);
     ~Parque();
+    Parque(const Parque &orig);
 
     int getCodigoParque()const;
     void setCodigoParque(int codigo);

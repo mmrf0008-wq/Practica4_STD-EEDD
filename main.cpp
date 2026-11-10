@@ -12,18 +12,24 @@
 using namespace std;
 
 //Rutas de los archivos
-const string RUTA_ESPECIES = "./data/arbolado-especies.csv";
-const string RUTA_PARQUES = "./data/parques.csv";
-const string RUTA_ARBOLES = "./data/arboladoMadrid.csv";
+const string RUTA_ESPECIES = "../data/arbolado-especies.csv";
+const string RUTA_PARQUES = "../data/parques.csv";
+const string RUTA_ARBOLES = "../data/arboladoMadrid.csv";
 
 
 void printArbol(Arbol *arbol) {
-    cout << "\t" << "identificador: " << arbol->getAssetNum() << endl;
-    cout << "\t" << "codigo de parque: " << arbol->getParque()->getCodigoParque() << endl;
-    cout << "\t" << "nombre común: " << arbol->getEspecie()->get_nombre_comun() << endl;
-    cout << "\t" << "nombre científico: " << arbol->getEspecie()->get_nombre_cientifico() << endl;
-    cout << "\t" << "tipo planta: " << Especie::tptostring(arbol->getEspecie()->get_tipo_planta()) << endl;
-    cout << endl;
+    if(arbol) {
+        cout << "\t" << "identificador: " << arbol->getAssetNum() << endl;
+        cout << "\t" << "codigo de parque: " << arbol->getParque()->getCodigoParque() << endl;
+        cout << "\t" << "nombre común: " << arbol->getEspecie()->get_nombre_comun() << endl;
+        cout << "\t" << "nombre científico: " << arbol->getEspecie()->get_nombre_cientifico() << endl;
+        cout << "\t" << "tipo planta: " << Especie::tptostring(arbol->getEspecie()->get_tipo_planta()) << endl;
+        cout << endl;
+    }
+    else {
+
+    }
+
 }
 
 void printParque(Parque *pq) {
@@ -43,12 +49,14 @@ int main() {
         std::cout << "\nEJERCICIO 1: BUSCAR VARIOS ID\n";
         string identificadores[] = {"6951831", "10152826", "8887777", "6906686"};
         for (string id: identificadores) {
-            auto arbol = control.buscarArbol(id);
+            Arbol *arbol = control.buscarArbol(id);
             if (arbol == nullptr) {
                 cout << "\t" << id << " no encontrado" << endl << endl;
                 continue;
             }
-            printArbol(arbol);
+                printArbol(arbol);
+
+
 
         }
 
