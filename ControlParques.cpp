@@ -183,15 +183,18 @@ unsigned int ControlParques::contarTipos() {
 list<Parque>* ControlParques::listarParqueArbol(string nombre_comun) {
 
 	list<Parque> * encontrados = new list<Parque>();
+	bool hay = false;
 
 	//recorremos los parques
 	for(list<Parque>::iterator i = this->parques.begin(); i!= this->parques.end(); i++) {
+		hay = false;
 		//recorremos los arboles dentro de los parques
-		for(vector<Arbol*>::iterator j = i->get_contenedor().begin(); j != i->get_contenedor().end(); j++ ) {
-			if((j.operator*()->getNombreComun() == nombre_comun)) {
-				encontrados->push_back(*i);
+		for(vector<Arbol*>::iterator j = i->get_contenedor().begin(); j != i->get_contenedor().end() && !hay; j++ ) {
+			if((j.operator*()->getNombreComun() == nombre_comun) ) {
+				hay = true;
 			}
 		}
+		if(hay) encontrados->push_back(*i);
 	}
 	if(encontrados->size() >0) return  encontrados;
 

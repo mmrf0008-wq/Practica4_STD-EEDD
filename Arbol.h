@@ -63,6 +63,10 @@ public:
     string get_nombre_barrio() const;
 
     void set_nombre_barrio(const string &nombre_barrio);
+
+    Parque * get_is_into() const;
+
+    void set_is_into(Parque *is_into);
 };
 
 

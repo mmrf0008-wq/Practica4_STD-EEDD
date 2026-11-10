@@ -251,8 +251,6 @@ Arbol LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> &especies) 
     std::replace(campos[6].begin(), campos[6].end(), ',', '.');
     std::replace(campos[7].begin(), campos[7].end(), ',', '.');
 
-
-
     Arbol a(
         campos[0],
         std::stoi(campos[1]),
@@ -265,6 +263,7 @@ Arbol LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> &especies) 
         leerMedida(campos[10]),
         leerMedida(campos[11]),
         new Especie(*buscaEspecie(campos[8], especies)));
+
     return  a;
 }
 
@@ -324,14 +323,18 @@ bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaF
 
         Arbol arbol = leerArbol_csv(linea, especies);
 
-        auto res = arboles.insert({arbol.getAssetNum(), arbol});
-        if(!res.second) continue;
+
 
         for(list<Parque>::iterator i = parques.begin(); i != parques.end(); i++) { //ligamos el arbol con un parque
+
             if(i->getCodigoParque() == arbol.get_num_parque()) {
+
                 i->insertarArbol(new Arbol(arbol));
+                arbol.set_is_into(&i.operator*());
             }
         }
+        auto res = arboles.insert({arbol.getAssetNum(), arbol});
+        if(!res.second) continue;
     }
 
     return true;

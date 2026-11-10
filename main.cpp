@@ -26,17 +26,14 @@ void printArbol(Arbol *arbol) {
         cout << "\t" << "tipo planta: " << Especie::tptostring(arbol->getEspecie()->get_tipo_planta()) << endl;
         cout << endl;
     }
-    else {
-
-    }
-
 }
-
 void printParque(Parque *pq) {
-    cout << "\tCodigo: " << pq->getCodigoParque() << endl;
-    cout << "\tNombre: " << pq->getNombreParque() << endl;
-    cout << "\tArboles: " << pq->get_contenedor().size() << endl;
-    cout << endl;
+    if(pq) {
+        cout << "\tCodigo: " << pq->getCodigoParque() << endl;
+        cout << "\tNombre: " << pq->getNombreParque() << endl;
+        cout << "\tArboles: " << pq->get_contenedor().size() << endl;
+        cout << endl;
+    }
 }
 
 int main() {
@@ -81,7 +78,8 @@ int main() {
 
         if(arbol == nullptr) throw invalid_argument("no se ha encontrado ningun arbol");
 
-        for(int i=0; i < arbol->size(); i++) {
+        cout << "Arboles encontrados " << arbol->size() << endl;
+        for(int i=0; i < 5; i++) {
             printArbol((*(arbol))[i]);
         }
 

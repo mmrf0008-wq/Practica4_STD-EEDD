@@ -190,6 +190,14 @@ void Arbol::set_num_barrio(int num_barrio) {
 	this->num_barrio = num_barrio;
 }
 
+Parque * Arbol::get_is_into() const {
+	return isInto;
+}
+
+void Arbol::set_is_into(Parque *is_into) {
+	isInto = is_into;
+}
+
 
 /**
  * @brief Obtiene el nombre común de la especie del árbol.
