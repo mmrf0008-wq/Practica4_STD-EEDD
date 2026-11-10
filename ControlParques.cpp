@@ -271,3 +271,13 @@ void ControlParques::ordenarEspecies() {
 		});
 }
 
+Especie * ControlParques::especieMasComunEnParque(const string &nombreParque) {
+
+	for(list<Parque>::iterator i = this->parques.begin(); i != this->parques.end(); i++) {
+		if(i->getNombreParque() == nombreParque) {
+			return i->especieMasComun();
+		}
+	}
+	return nullptr;
+}
+

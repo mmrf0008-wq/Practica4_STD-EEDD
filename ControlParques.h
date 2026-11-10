@@ -45,6 +45,8 @@ public:
     int contarArbolesBarrio(int num_barrio);
     void ordenarEspecies();
 
+    Especie* especieMasComunEnParque(const string &nombreParque);
+
 
 
 };

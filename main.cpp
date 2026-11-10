@@ -46,6 +46,10 @@ int main() {
             RUTA_PARQUES,
             RUTA_ARBOLES);
 
+        cout << "Especies cargadas " << control.getVariantes().size() << endl;
+        cout << "Parques cargados " << control.getparques().size() << endl;
+        cout << "Arboles cargados " << control.getArboles().size() << endl;
+
         std::cout << "\nEJERCICIO 1: BUSCAR VARIOS ID\n";
         string identificadores[] = {"6951831", "10152826", "8887777", "6906686"};
         for (string id: identificadores) {
@@ -58,7 +62,7 @@ int main() {
         }
 
         cout << "\nEJERCICIO 2: ESPECIE MÁS COMÚN EN PARQUE PRINCESA LEONOR\n";
-        Especie *especieMasComun = control.especieMasComun("PARQUE PRINCESA LEONOR");
+        Especie *especieMasComun = control.especieMasComunEnParque("PARQUE PRINCESA LEONOR");
         if (especieMasComun == nullptr) {
             cout << "\t" << "No se ha encontrado el parque" << endl;
         } else {
@@ -66,12 +70,12 @@ int main() {
         }
 
         cout << "\nEJERCICIO 3: BUSCAR PARQUES CON ABETO\n";
-        auto parques = control.listarParqueArbol("Abeto");
-        for (Parque *pq: parques) {
-            printParque(pq);
+        list<Parque> *parques = control.listarParqueArbol("Abeto");
+        for (list<Parque>::iterator i = parques->begin(); i != parques->end(); i++) {
+            printParque(&i.operator*());
         }
 
-        cout << "\nEJERCICIO 4: BUSCAR BUSCAR PINO RESINERO Y PINO\n";
+       /* cout << "\nEJERCICIO 4: BUSCAR BUSCAR PINO RESINERO Y PINO\n";
         string unicoArbol = "Pino resinero";
         Arbol *arbol = control.buscarArbolNombreComun(unicoArbol);
         if (arbol != nullptr) {
