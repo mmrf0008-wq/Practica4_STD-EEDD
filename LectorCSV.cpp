@@ -324,16 +324,14 @@ bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaF
 
         Arbol arbol = leerArbol_csv(linea, especies);
 
-        arboles.insert({arbol.getAssetNum(), arbol});
-
+        auto res = arboles.insert({arbol.getAssetNum(), arbol});
+        if(!res.second) continue;
 
         for(list<Parque>::iterator i = parques.begin(); i != parques.end(); i++) { //ligamos el arbol con un parque
             if(i->getCodigoParque() == arbol.get_num_parque()) {
                 i->insertarArbol(new Arbol(arbol));
             }
         }
-
-
     }
 
     return true;

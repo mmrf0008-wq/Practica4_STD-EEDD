@@ -76,8 +76,8 @@ map<string,Arbol> & ControlParques::getArboles() {
  * @return
  */
 Arbol *ControlParques::buscarArbol(const string &asnum) {
-
 	map<string,Arbol>::iterator iterator=this->arboles.find(asnum);
+	if(iterator == this->arboles.end()) return nullptr; //no se encontro
 	return &iterator->second;
 }
 
@@ -265,16 +265,9 @@ int ControlParques::contarArbolesBarrio(int num_barrio) {
 
 void ControlParques::ordenarEspecies() {
 
-	string valor;
-	Especie *aux;
-	for(int i =1; i < this->variantes.size(); i++) {
-		aux = &this->variantes[i];
-		int j= i-1;
-		while(j >=0 && this->variantes[j].get_codigo_especie() > aux->get_codigo_especie()) {
-			this->variantes[j+1] = this->variantes[j];
-			j= j-1;
-		}
-		this->variantes[j+1] = *aux;
-	}
+	std::sort(variantes.begin(), variantes.end(),
+		[](const Especie& a, const Especie& b) {
+			return a.get_codigo_especie() < b.get_codigo_especie();
+		});
 }
 

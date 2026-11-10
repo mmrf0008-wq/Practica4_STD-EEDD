@@ -4,6 +4,7 @@
 
 #include "Parque.h"
 
+#include <algorithm>
 #include <map>
 #include <vector>
 /**
@@ -38,9 +39,7 @@ Parque::Parque(const int &codigo, const string &nombre) {
  * Libera la memoria del contenedor de árboles.
  */
 Parque::~Parque() {
-    for ( std::vector<Arbol*>::iterator i = contenedor.begin(); i != contenedor.end(); i++) {
-        contenedor.erase(i);
-    }
+    contenedor.clear();
 }
 
 Parque::Parque(const Parque &orig) {
@@ -176,15 +175,10 @@ vector<Arbol*>& Parque::get_contenedor() {return this->contenedor; }
  * @brief Ordena los árboles del parque de menor a mayor según su número de asset.
  */
 void Parque::ordenaArboles() {
-    for (int i = 0; i < this->contenedor.size() - 1; i++) {
-        for (int j = 0; j <  this->contenedor.size() - i - 1; j++) {
-            if (this->contenedor[j]->getAssetNum() > this->contenedor[j + 1]->getAssetNum()) {
-                Arbol *aux = this->contenedor[j];
-                this->contenedor[j] = this->contenedor[j + 1];
-                this->contenedor[j + 1] = aux;
-            }
-        }
-    }
+    std::sort(contenedor.begin(), contenedor.end(),
+        [](const Arbol* a, const Arbol* b) {
+            return a->getAssetNum() < b->getAssetNum();
+        });
 }
 
 /**

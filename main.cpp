@@ -55,12 +55,9 @@ int main() {
                 continue;
             }
                 printArbol(arbol);
-
-
-
         }
 
-        /*cout << "\nEJERCICIO 2: ESPECIE MÁS COMÚN EN PARQUE PRINCESA LEONOR\n";
+        cout << "\nEJERCICIO 2: ESPECIE MÁS COMÚN EN PARQUE PRINCESA LEONOR\n";
         Especie *especieMasComun = control.especieMasComun("PARQUE PRINCESA LEONOR");
         if (especieMasComun == nullptr) {
             cout << "\t" << "No se ha encontrado el parque" << endl;
