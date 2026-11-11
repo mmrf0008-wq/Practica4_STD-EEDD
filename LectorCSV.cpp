@@ -303,7 +303,7 @@ bool  LectorCSV::cargarParques(list<Parque> &parques, const std::string &rutaFic
     return true;
 }
 
-bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies) {
+bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies, multimap<string, Arbol*> treeName) {
 
     std::ifstream fichero(rutaFichero);
 
@@ -323,17 +323,17 @@ bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaF
 
         Arbol arbol = leerArbol_csv(linea, especies);
 
-
+        auto res = arboles.insert({arbol.getAssetNum(), arbol});
+        treeName.insert(make_pair(res.first->second.getNombreComun(), &res.first->second));
 
         for(list<Parque>::iterator i = parques.begin(); i != parques.end(); i++) { //ligamos el arbol con un parque
 
             if(i->getCodigoParque() == arbol.get_num_parque()) {
 
-                i->insertarArbol(new Arbol(arbol));
-                arbol.set_is_into(&i.operator*());
+                i->insertarArbol(&(res.first->second));
+                arbol.set_is_into(&(*i));
             }
         }
-        auto res = arboles.insert({arbol.getAssetNum(), arbol});
         if(!res.second) continue;
     }
 

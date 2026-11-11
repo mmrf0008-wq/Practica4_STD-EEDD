@@ -23,7 +23,7 @@ ControlParques::ControlParques(const string &nomFichEspecies, const string &nomF
 		throw std::runtime_error("[ControlParques:cargaParques]: error al abrir fichero ");
 	}
 	cout << "cargados los parques" << endl;
-	if(!a.cargosArbol(this->arboles, nomFicheroArboles, this->parques, this->variantes)) { // lectura de arboles y ligue entre arbol y parque
+	if(!a.cargosArbol(this->arboles, nomFicheroArboles, this->parques, this->variantes,treeName)) { // lectura de arboles y ligue entre arbol y parque
 		throw std::runtime_error("[ControlParques:cargaArboles]: error al abrir fichero ");
 	}
 	cout << "Cargados los arboles" << endl;
@@ -230,9 +230,9 @@ vector<Arbol*> *ControlParques::buscarArbolNombreComunComienzo(string ncomun) {
 	vector<Arbol*> *encontrados = new vector<Arbol *>();
 
 	for(map<string,Arbol>::iterator i = this->arboles.begin(); i != this->arboles.end(); i++) {
-		/*if(i->second.getNombreComun() == nombre_comun) {
+		if(i->second.getNombreComun() == ncomun) {
 			encontrados->push_back(new Arbol(i->second));
-		}*/
+		}
 	}
 	if(encontrados->size() >0) return encontrados;
 

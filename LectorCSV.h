@@ -23,7 +23,7 @@ public:
     bool static  cargarEspecies(vector<Especie> &vector, const std::string& rutaFichero);
     bool static cargarParques(list<Parque> &parques, const std::string &rutaFichero);
 
-    bool  cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies);
+    bool  cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies, multimap<string,Arbol*> treeName);
 
     std::size_t numeroEspecies() const;
     std::size_t filasDescartadas() const;
