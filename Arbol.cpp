@@ -1,4 +1,3 @@
-
 #include "Arbol.h"
 
 /**
@@ -25,9 +24,10 @@ Arbol::Arbol(): assetnum(""),num_parque(0),num_distrito(0),
  * @param altura Altura del árbol.
  */
 Arbol::Arbol(const string &assetnum, int num_parque, int num_distrito, const string &nombre_distrito, int num_barrio,
-    const string &nombre_barrio, double x, double y, float perimetro, float altura, Especie* especie):
+    const string &nombre_barrio, double x, double y, float perimetro, float altura, Especie* especie, Parque* isInto):
         assetnum(assetnum),num_parque(num_parque),num_distrito(num_distrito),nombre_distrito(nombre_distrito),
-        num_barrio(num_barrio),nombre_barrio(nombre_barrio),x(x),y(y),perimetro(perimetro),altura(altura), especie_arbol(especie)
+        num_barrio(num_barrio),nombre_barrio(nombre_barrio),x(x),y(y),perimetro(perimetro),altura(altura),
+        especie_arbol(especie), isInto(isInto)
 {
 }
 
@@ -83,6 +83,9 @@ Arbol::~Arbol() {
 		delete especie_arbol;
 		especie_arbol = nullptr;
 	}
+    if (isInto) {
+        isInto = nullptr;
+    }
 
 }
 
@@ -174,6 +177,10 @@ Especie* Arbol::getEspecie() const {
     return especie_arbol;
 }
 
+int Arbol::getNumDistrito() const {
+    return num_distrito;
+}
+
 void Arbol::setParque(Parque *parque) {
     this->isInto = parque;
 }
@@ -188,6 +195,10 @@ int Arbol::get_num_barrio() const {
 
 void Arbol::set_num_barrio(int num_barrio) {
 	this->num_barrio = num_barrio;
+}
+
+string Arbol::get_nombre_barrio() const {
+    return this->nombre_barrio;
 }
 
 Parque * Arbol::get_is_into() const {

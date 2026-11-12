@@ -78,14 +78,17 @@ int main() {
 
         if(arbol == nullptr) throw invalid_argument("no se ha encontrado ningun arbol");
 
-        cout << "Arboles encontrados " << arbol->size() << endl;
+        cout << "Arboles encontrados con el nombre 'Pino Resinero': " << arbol->size() << endl;
         for(int i=0; i < 5; i++) {
             printArbol((*(arbol))[i]);
         }
 
         vector<Arbol *> *arbolesPino = control.buscarArbolNombreComunComienzo("Pino");
         if(arbolesPino == nullptr) throw invalid_argument("arboles con comienzo pino no encontrados") ;
-        cout<<"\tPinos encontrado: "<<arbolesPino->size()<<endl;
+        cout << "Arboles encontrados con el prefijo 'Pino': " << arbolesPino->size() << endl;
+        for(int i=0; i < 5; i++) {
+            printArbol((*(arbolesPino))[i]);
+        }
 
         cout << "\nEJERCICIO 5: ÁRBOLES EN BARRIOS 43 Y 91\n";
         int id_barrios[] = {43, 91};
@@ -94,15 +97,15 @@ int main() {
             cout << "\t" << "Total árboles barrio " << barrio << ": " << total << endl;
         }
 
-       /* cout << "\nEJERCICIO DE PAREJAS/OPCIONAL: BUSCAR ÁRBOLES POR NOMBRE Y BARRIO\n";
-        vector<Arbol *> arbolesNombreDistrito = control.buscarArbolesPorEspecieYDistrito("Pino", 9);
-        cout<<"Arboles encontrados: "<<arbolesNombreDistrito.size()<<endl;
-        for (auto arbol: arbolesNombreDistrito) {
-            cout << "\t" << "assetnum: " << arbol->getAssetNum() << endl;
-            cout << "\t" << "nombre barrio: " << arbol->get_nombre_barrio() << endl;
-            cout << "\t" << "parque: " << arbol->getParque()->getNombreParque() << endl;
+        cout << "\nEJERCICIO DE PAREJAS/OPCIONAL: BUSCAR ÁRBOLES POR NOMBRE Y BARRIO\n";
+        list<Arbol *> *arbolesNombreDistrito = control.buscarArbolesPorEspecieYDistrito("Pino", 9);
+        cout<<"Arboles encontrados: "<<arbolesNombreDistrito->size()<<endl;
+        for (list<Arbol*>::iterator i = arbolesNombreDistrito->begin(); i != arbolesNombreDistrito->end(); i++) {
+            cout << "\t" << "assetnum: " << (*i)->getAssetNum() << endl;
+            cout << "\t" << "nombre barrio: " << (*i)->get_nombre_barrio() << endl;
+            cout << "\t" << "parque: " << (*i)->getParque()->getNombreParque() << endl;
             cout << endl;
-        }*/
+        }
 
     } catch (const std::exception &error) {
         std::cerr << "\nError: " << error.what() << '\n';

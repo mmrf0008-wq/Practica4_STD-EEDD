@@ -275,3 +275,14 @@ Especie * ControlParques::especieMasComunEnParque(const string &nombreParque) {
 	return nullptr;
 }
 
+list<Arbol *> *ControlParques::buscarArbolesPorEspecieYDistrito(const string &nombreComun, int numDistrito) {
+	list<Arbol *> *lista = new list<Arbol *>();
+
+	for (map<string,Arbol>::iterator i= arboles.begin(); i != arboles.end(); i++) {
+		if (i->second.getNombreComun() == nombreComun && i->second.getNumDistrito() == numDistrito) {
+			lista->push_back(&i->second);
+		}
+	}
+	return lista;
+}
+

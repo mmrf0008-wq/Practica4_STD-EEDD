@@ -47,6 +47,7 @@ public:
 
     Especie* especieMasComunEnParque(const string &nombreParque);
 
+    list<Arbol*> *buscarArbolesPorEspecieYDistrito(const string &nombreComun, int numDistrito);
 
 
 };

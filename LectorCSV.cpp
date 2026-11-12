@@ -251,18 +251,19 @@ Arbol LectorCSV::leerArbol_csv(const string &linea,  vector<Especie> &especies) 
     std::replace(campos[6].begin(), campos[6].end(), ',', '.');
     std::replace(campos[7].begin(), campos[7].end(), ',', '.');
 
-    Arbol a(
-        campos[0],
-        std::stoi(campos[1]),
-        std::stoi(campos[2]),
-        campos[3],
-        std::stoi(campos[4]),
-        campos[5],
-        std::stod(campos[6]),
-        std::stod(campos[7]),
-        leerMedida(campos[10]),
-        leerMedida(campos[11]),
-        new Especie(*buscaEspecie(campos[8], especies)));
+    Arbol a (
+         campos[0],
+         std::stoi(campos[1]),
+         std::stoi(campos[2]),
+         campos[3],
+         std::stoi(campos[4]),
+         campos[5],
+         std::stod(campos[6]),
+         std::stod(campos[7]),
+         leerMedida(campos[10]),
+         leerMedida(campos[11]),
+         new Especie(*buscaEspecie(campos[8], especies)),
+         nullptr);                                          //El arbol se carga luego en cargosArbol
 
     return  a;
 }
@@ -303,7 +304,7 @@ bool  LectorCSV::cargarParques(list<Parque> &parques, const std::string &rutaFic
     return true;
 }
 
-bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies, multimap<string, Arbol*> treeName) {
+bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaFichero, list<Parque> &parques, vector<Especie> &especies, multimap<string, Arbol*> &treeName) {
 
     std::ifstream fichero(rutaFichero);
 
@@ -326,12 +327,14 @@ bool LectorCSV::cargosArbol(map<string,Arbol> &arboles, const std::string &rutaF
         auto res = arboles.insert({arbol.getAssetNum(), arbol});
         treeName.insert(make_pair(res.first->second.getNombreComun(), &res.first->second));
 
-        for(list<Parque>::iterator i = parques.begin(); i != parques.end(); i++) { //ligamos el arbol con un parque
+        bool ligado = false;
+        for(list<Parque>::iterator i = parques.begin(); i != parques.end() && !ligado == true; i++) { //ligamos el arbol con un parque
 
             if(i->getCodigoParque() == arbol.get_num_parque()) {
 
                 i->insertarArbol(&(res.first->second));
-                arbol.set_is_into(&(*i));
+                res.first->second.set_is_into(&(*i));
+                ligado = true;
             }
         }
         if(!res.second) continue;

@@ -25,7 +25,7 @@ public:
     Arbol();
     Arbol(const string &assetnum, int num_parque, int num_distrito,
         const string &nombre_distrito, int num_barrio, const string &nombre_barrio,
-        double x, double y, float perimetro, float altura, Especie *especie);
+        double x, double y, float perimetro, float altura, Especie *especie, Parque* isInto);
 
     Arbol(const string &assetnum, int num_parque, int num_distrito,
      const string &nombre_distrito, int num_barrio, const string &nombre_barrio,
@@ -40,6 +40,8 @@ public:
 
     void setEspecie(Especie *e);
     Especie* getEspecie() const;
+
+    int getNumDistrito() const;
 
     string getCodigoEspecie() const;
     string getNombreComun() const;
