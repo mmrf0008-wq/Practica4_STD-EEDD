@@ -20,16 +20,8 @@ private:
 	TipoPlanta tipo_planta_;
 
 public:
-	/**
-	 *
-	 * @return
-	 */
 	string get_codigo_especie() const;
 
-	/**
-	 *
-	 * @param codigo_especie
-	 */
 	void set_codigo_especie(const string &codigo_especie);
 	
 	string get_nombre_comun() const;

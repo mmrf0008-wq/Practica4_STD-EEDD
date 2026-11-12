@@ -8,7 +8,16 @@
 
 #include "LectorCSV.h"
 
-
+/**
+ * @brief Constructor de ControlParques. Carga las especies, los parques y los árboles desde los ficheros CSV y enlaza cada árbol con su parque.
+ *
+ * Tras cargar las especies se ordenan por código de especie.
+ * @param nomFichEspecies Ruta del fichero CSV de especies.
+ * @param nomFichParques Ruta del fichero CSV de parques.
+ * @param nomFicheroArboles Ruta del fichero CSV de árboles.
+ * @throw std::invalid_argument Si la ruta del fichero de especies o la de parques está vacía.
+ * @throw std::runtime_error Si no se puede abrir alguno de los ficheros.
+ */
 ControlParques::ControlParques(const string &nomFichEspecies, const string &nomFichParques, const string &nomFicheroArboles) {
 	if(nomFichEspecies.empty() || nomFichParques.empty()) {
 		throw invalid_argument("[ControlParques]: parametros no validos ");
@@ -31,10 +40,19 @@ ControlParques::ControlParques(const string &nomFichEspecies, const string &nomF
 	cout << "Cargados los arboles" << endl;
 
 }
+
+/**
+ * @brief Destructor de ControlParques. Vacía el vector de especies.
+ */
 ControlParques::~ControlParques() {
 	this->variantes.clear();
 }
 
+/**
+ * @brief Busca un parque por su nombre.
+ * @param nombre Nombre exacto del parque.
+ * @return Puntero al parque, o nullptr si no existe.
+ */
 Parque * ControlParques::buscarParque(const string &nombre) {
 	for(list<Parque>::iterator i = this->parques.begin(); i != this->parques.end(); i++) {
 		if(i->getNombreParque() == nombre) {
@@ -44,7 +62,13 @@ Parque * ControlParques::buscarParque(const string &nombre) {
 	return nullptr;
 }
 
-
+/**
+ * @brief Obtiene las especies cuyo nombre científico contiene una subcadena.
+ *
+ * @note La memoria del vector devuelto debe liberarla el llamador.
+ * @param cadena Subcadena a buscar en el nombre científico.
+ * @return Referencia a un vector reservado con new con las especies seleccionadas.
+ */
 vector<Especie> & ControlParques::listadoEspecieSubNombre(const string &cadena) {
 
 	vector<Especie> *listad = new vector<Especie>();
@@ -56,24 +80,34 @@ vector<Especie> & ControlParques::listadoEspecieSubNombre(const string &cadena) 
 	return *listad;
 }
 
-
+/**
+ * @brief Obtiene el vector de especies cargadas.
+ * @return Referencia al vector de especies (ordenado por código de especie).
+ */
 vector<Especie> & ControlParques::getVariantes() {
 	return this->variantes;
 }
 
-
+/**
+ * @brief Obtiene la lista de parques cargados.
+ * @return Referencia a la lista de parques.
+ */
 list<Parque> & ControlParques::getparques() {
 	return this->parques;
 }
 
+/**
+ * @brief Obtiene el mapa de árboles cargados.
+ * @return Referencia al mapa de árboles, cuya clave es el assetnum.
+ */
 map<string,Arbol> & ControlParques::getArboles() {
 	return this->arboles;
 }
 
 /**
- * @def localiza un arbol a partie de su identificador
+ * @def localiza un arbol a partir de su identificador
  * @param asnum
- * @return
+ * @return Devuelve el dato que estamos buscando
  */
 Arbol *ControlParques::buscarArbol(const string &asnum) {
 	map<string,Arbol>::iterator iterator=this->arboles.find(asnum);
@@ -113,7 +147,15 @@ vector<Arbol*> * ControlParques::listaArbolesParque(const string &nombre_parque)
 	return nullptr;
 }
 
-
+/**
+ * @brief Busca los árboles cuyo identificador numérico está en el rango [asNumMin, asNumMax].
+ *
+ * @note La memoria del vector devuelto debe liberarla el llamador; los árboles apuntados pertenecen al mapa.
+ * @param asNumMin Cota inferior del rango (identificador como cadena numérica).
+ * @param asNumMax Cota superior del rango (identificador como cadena numérica).
+ * @return Referencia a un vector reservado con new con punteros a los árboles encontrados.
+ * @throw std::invalid_argument Si asNumMin es mayor que asNumMax (comparados como cadenas).
+ */
 vector<Arbol *> & ControlParques::buscarArbolesRango(const string &asNumMin, const string &asNumMax) {
 	vector<Arbol*> *nuevo = new vector<Arbol *>;
 
@@ -132,6 +174,10 @@ vector<Arbol *> & ControlParques::buscarArbolesRango(const string &asNumMin, con
 	return *nuevo;
 }
 
+/**
+ * @brief Obtiene el árbol de mayor altura de entre todos los parques.
+ * @return Puntero al árbol más alto, o nullptr si ningún parque tiene árboles.
+ */
 Arbol *ControlParques::getArbolMasAlto() {
 
 	Arbol *encontrado = nullptr;
@@ -146,6 +192,13 @@ Arbol *ControlParques::getArbolMasAlto() {
 	}
 	return encontrado; 
 }
+
+/**
+ * @brief Comprueba si un tipo de planta está presente en un vector de tipos.
+ * @param tipo_planta Tipo de planta a buscar.
+ * @param tipos Vector de tipos donde buscar.
+ * @return true si el tipo está en el vector, false en caso contrario.
+ */
 bool ControlParques::buscar_tipo_planta(const TipoPlanta &tipo_planta,  vector<TipoPlanta> tipos) {
 	for(int i =0; i < tipos.size(); i++) {
 		if(tipos[i] == tipo_planta) {
@@ -155,12 +208,21 @@ bool ControlParques::buscar_tipo_planta(const TipoPlanta &tipo_planta,  vector<T
 	return false;
 }
 
-
+/**
+ * @brief Cuenta las especies distintas presentes en un parque.
+ * @param nombreparque Nombre del parque.
+ * @return Número de especies distintas, o 0 si el parque no existe.
+ */
 unsigned int ControlParques::contarEspecies(const string &nombreparque) {
 	Parque *p = buscarParque(nombreparque);
 	if(p) return p->contarEspecies();
 	return 0;
 }
+
+/**
+ * @brief Cuenta los tipos de planta distintos presentes entre los árboles de todos los parques (se ignora el tipo NONE).
+ * @return Número de tipos de planta distintos.
+ */
 unsigned int ControlParques::contarTipos() {
 
 	vector<TipoPlanta> encontradas;
@@ -180,7 +242,7 @@ unsigned int ControlParques::contarTipos() {
  * @def devuelve un conjunto de parques que tienen al menos un ejemplar del arbol
  * dado por parametro mediante su nombre comun 
  * @param nombre_comun
- * @return
+ * @return Una lista de parques que tienen arboles con un nombre comun determinado
  */
 list<Parque>* ControlParques::listarParqueArbol(string nombre_comun) {
 
@@ -206,7 +268,7 @@ list<Parque>* ControlParques::listarParqueArbol(string nombre_comun) {
 /**
  * @def localiza en tiempo optimo todos los ejemplares de arboles con ese nombre comun exacto 
  * @param nombre_comun 
- * @return 
+ * @return Un vector de arboles que hemos encontrado a través de su nombre comun
  */
 vector<Arbol *>* ControlParques::buscarArbolNombreComun(string nombre_comun) {
 	vector<Arbol*> *encontrados = new vector<Arbol *>();
@@ -225,7 +287,7 @@ vector<Arbol *>* ControlParques::buscarArbolNombreComun(string nombre_comun) {
  * @def localiza en tiempo optimo todos los ejemplares de arboles dando una
  * palabra del comienzo 
  * @param nombre_comun 
- * @return 
+ * @return Un vector de arboles que hemos encontrado que contengan una determinada cadena
  */
 vector<Arbol*> *ControlParques::buscarArbolNombreComunComienzo(string ncomun) {
 
@@ -248,7 +310,7 @@ vector<Arbol*> *ControlParques::buscarArbolNombreComunComienzo(string ncomun) {
 /**
  * @def devuelve el numero de arbolees que tienen un barrio dado su codigo
  * @param num_barrio 
- * @return 
+ * @return El numero de veces que se repite un arbol en un determinado barrio
  */
 int ControlParques::contarArbolesBarrio(int num_barrio) {
 
@@ -263,6 +325,9 @@ int ControlParques::contarArbolesBarrio(int num_barrio) {
 	return contador;
 }
 
+/**
+ * @brief Ordena el vector de especies de menor a mayor según su código de especie.
+ */
 void ControlParques::ordenarEspecies() {
 
 	std::sort(variantes.begin(), variantes.end(),
@@ -271,6 +336,12 @@ void ControlParques::ordenarEspecies() {
 		});
 }
 
+/**
+ * @brief Obtiene la especie más común (con más ejemplares) de un parque.
+ * @param nombreParque Nombre del parque.
+ * @return Puntero a la especie más común, o nullptr si el parque no existe.
+ * @throw std::out_of_range Si el parque existe pero no contiene ningún árbol.
+ */
 Especie * ControlParques::especieMasComunEnParque(const string &nombreParque) {
 
 	for(list<Parque>::iterator i = this->parques.begin(); i != this->parques.end(); i++) {
@@ -281,6 +352,14 @@ Especie * ControlParques::especieMasComunEnParque(const string &nombreParque) {
 	return nullptr;
 }
 
+/**
+ * @brief Busca los árboles de una especie (por nombre común exacto) situados en un distrito.
+ *
+ * @note El llamador debe liberar la lista, pero no los árboles, que pertenecen al mapa.
+ * @param nombreComun Nombre común exacto de la especie.
+ * @param numDistrito Número de distrito.
+ * @return Puntero a una lista reservada con new con punteros a los árboles del mapa (no copias); la lista está vacía si no hay coincidencias.
+ */
 list<Arbol *> *ControlParques::buscarArbolesPorEspecieYDistrito(const string &nombreComun, int numDistrito) {
 	list<Arbol *> *lista = new list<Arbol *>();
 

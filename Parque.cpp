@@ -42,6 +42,10 @@ Parque::~Parque() {
     contenedor.clear();
 }
 
+/**
+ * @brief Constructor de copia de la clase Parque. Copia el código, el nombre y los punteros del contenedor (los árboles no se duplican).
+ * @param orig Parque de origen a copiar.
+ */
 Parque::Parque(const Parque &orig) {
 
     this->nombre_parque = orig.nombre_parque;
@@ -182,8 +186,11 @@ void Parque::ordenaArboles() {
 }
 
 /**
- * 
- * @return 
+ * @brief Obtiene la especie más común (con más ejemplares) del parque.
+ *
+ * Cuenta los árboles agrupándolos por código de especie.
+ * @return Puntero a la especie más común. Ante un empate se devuelve la que alcanza antes el máximo.
+ * @throw std::out_of_range Si el parque no contiene ningún árbol.
  */
 Especie* Parque::especieMasComun() const {
     if (contenedor.empty()) {

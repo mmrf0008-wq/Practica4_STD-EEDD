@@ -22,6 +22,8 @@ Arbol::Arbol(): assetnum(""),num_parque(0),num_distrito(0),
  * @param y Coordenada Y de la ubicación del árbol.
  * @param perimetro Perímetro del tronco del árbol.
  * @param altura Altura del árbol.
+ * @param especie Puntero a la especie del árbol (el árbol pasa a ser su propietario y la libera en el destructor).
+ * @param isInto Puntero al parque al que pertenece el árbol (puede ser nullptr).
  */
 Arbol::Arbol(const string &assetnum, int num_parque, int num_distrito, const string &nombre_distrito, int num_barrio,
     const string &nombre_barrio, double x, double y, float perimetro, float altura, Especie* especie, Parque* isInto):
@@ -173,38 +175,74 @@ string Arbol::getTipoEspecie() const {
     return Especie::tptostring(this->especie_arbol->get_tipo_planta());
 }
 
+/**
+ * @brief Obtiene la especie asociada al árbol.
+ * @return Puntero al objeto Especie del árbol (puede ser nullptr).
+ */
 Especie* Arbol::getEspecie() const {
     return especie_arbol;
 }
 
+/**
+ * @brief Obtiene el número de distrito en el que se ubica el árbol.
+ * @return Número de distrito.
+ */
 int Arbol::getNumDistrito() const {
     return num_distrito;
 }
 
+/**
+ * @brief Establece el parque al que pertenece el árbol.
+ * @param parque Puntero al parque.
+ */
 void Arbol::setParque(Parque *parque) {
     this->isInto = parque;
 }
 
+/**
+ * @brief Obtiene el parque al que pertenece el árbol.
+ * @return Puntero al parque, o nullptr si el árbol no está asociado a ninguno.
+ */
 Parque * Arbol::getParque() const {
     return isInto;
 }
 
+/**
+ * @brief Obtiene el número de barrio en el que se ubica el árbol.
+ * @return Número de barrio.
+ */
 int Arbol::get_num_barrio() const {
 	return num_barrio;
 }
 
+/**
+ * @brief Establece el número de barrio del árbol.
+ * @param num_barrio Nuevo número de barrio.
+ */
 void Arbol::set_num_barrio(int num_barrio) {
 	this->num_barrio = num_barrio;
 }
 
+/**
+ * @brief Obtiene el nombre del barrio en el que se ubica el árbol.
+ * @return Nombre del barrio.
+ */
 string Arbol::get_nombre_barrio() const {
     return this->nombre_barrio;
 }
 
+/**
+ * @brief Obtiene el parque al que pertenece el árbol (equivalente a getParque()).
+ * @return Puntero al parque, o nullptr si no está asociado a ninguno.
+ */
 Parque * Arbol::get_is_into() const {
 	return isInto;
 }
 
+/**
+ * @brief Establece el parque al que pertenece el árbol (equivalente a setParque()).
+ * @param is_into Puntero al parque.
+ */
 void Arbol::set_is_into(Parque *is_into) {
 	isInto = is_into;
 }
