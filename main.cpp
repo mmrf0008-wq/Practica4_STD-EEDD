@@ -1,3 +1,4 @@
+
 #include <algorithm>
 #include <chrono>
 #include <exception>
@@ -36,6 +37,10 @@ void printParque(Parque *pq) {
     }
 }
 
+/**
+*   Realizado por Alberto Martínez Martín amm00530@red.ujaen.es
+*   y por Maitena María Rosa Fiedler mmrf0008@red.ujaen.es
+**/
 int main() {
     try {
         ControlParques control(
