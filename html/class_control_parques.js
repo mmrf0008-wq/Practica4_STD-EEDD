@@ -1,0 +1,25 @@
+var class_control_parques =
+[
+    [ "ControlParques", "class_control_parques.html#a573aabf0a6740d68af81dceb8317a4e2", null ],
+    [ "~ControlParques", "class_control_parques.html#a8365d2db6fb5c8d48e4d0e10b66af553", null ],
+    [ "buscar_tipo_planta", "class_control_parques.html#a7c92bffaffd899e11dab3244f24af1cc", null ],
+    [ "buscarArbol", "class_control_parques.html#a4fe185100791b1812652ace38ba23c0e", null ],
+    [ "buscarArbolesPorEspecieYDistrito", "class_control_parques.html#a854b79ff043398316d355ef882f4370d", null ],
+    [ "buscarArbolesRango", "class_control_parques.html#a35c480081eb0bd8d4a969ecf7277a978", null ],
+    [ "buscarArbolNombreComun", "class_control_parques.html#a249316f962a9e4c75c9867af9d553488", null ],
+    [ "buscarArbolNombreComunComienzo", "class_control_parques.html#a507316e9c09e26234f1d2100e974217e", null ],
+    [ "buscarParque", "class_control_parques.html#a37820cfa0f56aa6fc06486fa58c1dd50", null ],
+    [ "contarArbolesBarrio", "class_control_parques.html#ae5b87651e63c93551c4b2892d69140bc", null ],
+    [ "contarEspecies", "class_control_parques.html#a9c00185f3d185f80c73db5856869c0d5", null ],
+    [ "contarTipos", "class_control_parques.html#ab3585ff6436c82ca3f4e5f43a36b5ab1", null ],
+    [ "eliminarParque", "class_control_parques.html#a8fd893c9777166abdcd89e942d22c134", null ],
+    [ "especieMasComunEnParque", "class_control_parques.html#a62fe0a0ce67eef07065c725e97c906f7", null ],
+    [ "getArboles", "class_control_parques.html#a3ba6d92ae9445dbda8a7c9e7361c3a51", null ],
+    [ "getArbolMasAlto", "class_control_parques.html#a3bdad5cca45d544bf76e6526b1d6a919", null ],
+    [ "getparques", "class_control_parques.html#a36fcb522f2113ab4f37a7dbeb6f34851", null ],
+    [ "getVariantes", "class_control_parques.html#aac1bcc91881c2fbbf83d923433fed53b", null ],
+    [ "listaArbolesParque", "class_control_parques.html#a26ed6a7a233b5f51e952a23496746545", null ],
+    [ "listadoEspecieSubNombre", "class_control_parques.html#ac136660395e28e96766f717e14a95896", null ],
+    [ "listarParqueArbol", "class_control_parques.html#a79088c726f4ca0b2322b7ea6400fca04", null ],
+    [ "ordenarEspecies", "class_control_parques.html#aa5a4eb823f192b1731a14a258a19efb4", null ]
+];
