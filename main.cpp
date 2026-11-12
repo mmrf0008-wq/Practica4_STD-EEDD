@@ -86,7 +86,7 @@ int main() {
         vector<Arbol *> *arbolesPino = control.buscarArbolNombreComunComienzo("Pino");
         if(arbolesPino == nullptr) throw invalid_argument("arboles con comienzo pino no encontrados") ;
         cout << "Arboles encontrados con el prefijo 'Pino': " << arbolesPino->size() << endl;
-        for(int i=0; i < 5; i++) {
+        for(int i= arbolesPino->size(); i > arbolesPino->size()-5; i--) {
             printArbol((*(arbolesPino))[i]);
         }
 

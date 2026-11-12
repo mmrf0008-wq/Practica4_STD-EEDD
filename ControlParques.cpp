@@ -4,6 +4,8 @@
 
 #include "ControlParques.h"
 #include <algorithm>
+#include <ranges>
+
 #include "LectorCSV.h"
 
 
@@ -229,8 +231,12 @@ vector<Arbol*> *ControlParques::buscarArbolNombreComunComienzo(string ncomun) {
 
 	vector<Arbol*> *encontrados = new vector<Arbol *>();
 
+	string aux;
 	for(map<string,Arbol>::iterator i = this->arboles.begin(); i != this->arboles.end(); i++) {
-		if(i->second.getNombreComun() == ncomun) {
+
+		size_t pos = i->second.getNombreComun().find(" ");
+		aux = i->second.getNombreComun().substr(0, pos);
+		if(aux == ncomun) {
 			encontrados->push_back(new Arbol(i->second));
 		}
 	}
